@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">fibonacci</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="enter_num">Enter a number to check.</string>
+    <string name="button_send">Send</string>
+    <string name="title_activity_check_fibo">CheckFiboActivity</string>
+ 
+
+</resources>
