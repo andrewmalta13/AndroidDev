@@ -1,37 +1,41 @@
 package com.example.yaleimapp;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.view.Window;
 
-public class StandingsActivity extends ActionBarActivity {
+
+@SuppressWarnings("deprecation")
+public class StandingsActivity extends Activity{
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_standings);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		//setContentView(R.layout.activity_standings);
 		
-		String[] residentialColleges = {"Berkeley", "Branford", "Calhoun", "Davenport", "Erza Stiles",
-				"Johnathan Edwards", "Morse", "Pierson", "Saybrook", "Silliman",
-				"Timothy Dwight", "Trumbull"}; //string list for residential college names
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
-		ListAdapter adapter = new StandingsAdapter(this, residentialColleges);
-		ListView listView = (ListView) findViewById(R.id.standingsList);
-		listView.setAdapter(adapter);
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override //TO DO, Make an intent for an Activity that displays a particular College Page
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				//provide a page for viewing various information about a particular college
-				
-			}
-		});
+	   
+	    Tab standingsTab = actionBar.newTab().setText("Standings").
+	    		setTabListener(new MyTabListener<StandingsFragment>(this, "Standings", StandingsFragment.class));
+	    actionBar.addTab(standingsTab);
+	    
+	    //TODO change StandingsFragment to MatchesFragment when module is completed.
+	    Tab matchesTab = actionBar.newTab().setText("Matches").
+	    		setTabListener(new MyTabListener<MatchesFragment>(this, "Matches", MatchesFragment.class));
+	    actionBar.addTab(matchesTab);
+	    
+	    Tab sportsTab = actionBar.newTab().setText("Sports").
+                setTabListener(new MyTabListener<MatchesFragment>(this, "Sports", MatchesFragment.class));
+	    actionBar.addTab(sportsTab);
+			
 	}
 	
 	
@@ -53,4 +57,5 @@ public class StandingsActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
 }
