@@ -17,9 +17,15 @@ public class StandingsFragment extends ListFragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
-	    final String[] residentialColleges = {"Berkeley", "Branford", "Calhoun", "Davenport", "Erza Stiles",
-				"Johnathan Edwards", "Morse", "Pierson", "Saybrook", "Silliman",
-				"Timothy Dwight", "Trumbull"}; //string list for residential college names
+	    
+	    //list of the 12 residential college objects.
+	    final ResidentialCollege[] residentialColleges = {(new ResidentialCollege("Berkeley", R.drawable.berkeley)),
+	    		(new ResidentialCollege("Branford", R.drawable.branford)), (new ResidentialCollege("Calhoun", R.drawable.calhoun)),
+	    		(new ResidentialCollege("Davenport", R.drawable.davenport)), (new ResidentialCollege("Erza Stiles", R.drawable.erzastiles)),
+	    		(new ResidentialCollege("Johnathan Edwards", R.drawable.johnathanedwards)), 
+	    		(new ResidentialCollege("Morse", R.drawable.morse)), (new ResidentialCollege("Pierson", R.drawable.pierson)), 
+	    	    (new ResidentialCollege("Saybrook", R.drawable.saybrook)), (new ResidentialCollege("Silliman", R.drawable.silliman)),
+	    	    (new ResidentialCollege("Timothy Dwight", R.drawable.timothydwight)), (new ResidentialCollege("Trumbull", R.drawable.trumbull))};
       
         ListAdapter adapter = new StandingsAdapter(getActivity(), residentialColleges);
 	    setListAdapter(adapter);  

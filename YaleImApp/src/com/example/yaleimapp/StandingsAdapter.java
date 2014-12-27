@@ -9,13 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class StandingsAdapter extends ArrayAdapter<String>{
-	
-	private final int[] imageNames = {R.drawable.berkeley, R.drawable.branford, R.drawable.calhoun, R.drawable.davenport,
-			R.drawable.erzastiles, R.drawable.johnathanedwards, R.drawable.morse, R.drawable.pierson, R.drawable.saybrook,
-			R.drawable.silliman, R.drawable.timothydwight, R.drawable.trumbull};
+public class StandingsAdapter extends ArrayAdapter<Object>{
 
-	public StandingsAdapter(Context context, String[] colleges) {
+	public StandingsAdapter(Context context, ResidentialCollege[] colleges) {
 		super(context, R.layout.row_layout, colleges);
 		// TODO Auto-generated constructor stub
 	}
@@ -26,16 +22,16 @@ public class StandingsAdapter extends ArrayAdapter<String>{
 		
 		View view = inflater.inflate(R.layout.row_layout, parent, false);
 		
-		String college = getItem(position);
+		ResidentialCollege college = (ResidentialCollege) getItem(position);
 		TextView collegeView = (TextView) view.findViewById(R.id.standingsTextView);
-		collegeView.setText(college);
+		collegeView.setText(college.getName());
 		
 		TextView scoreView = (TextView) view.findViewById(R.id.tyngScore);
-		scoreView.setText(getScore(college));
+		scoreView.setText(getScore(college.getName()));
 		
 		
 		ImageView imageView = (ImageView) view.findViewById(R.id.resCollegeImage);
-		imageView.setImageResource(imageNames[position]);
+		imageView.setImageResource(college.getImgResource());
 		
 		return view;
 		
