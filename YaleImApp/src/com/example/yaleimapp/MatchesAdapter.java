@@ -1,5 +1,7 @@
 package com.example.yaleimapp;
 
+import java.util.Date;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,7 @@ public class MatchesAdapter extends ArrayAdapter<Object>{
 	public View getView(int position, View convertView, ViewGroup parent){
 		LayoutInflater inflater = LayoutInflater.from(getContext());
 		
-		View view = inflater.inflate(R.layout.row_layout, parent, false);
+		View view = inflater.inflate(R.layout.match_row_layout, parent, false);
 		
 		Match match = (Match) getItem(position);
 		
