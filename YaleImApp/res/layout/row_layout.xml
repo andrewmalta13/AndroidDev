@@ -20,13 +20,20 @@
        android:textSize="30sp"
        android:padding="15dp"
    ></TextView>
-   <TextView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:id="@+id/tyngScore"
-       android:textSize="30sp"
-       android:paddingLeft="35dp">
-       
-   </TextView>
+   
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="horizontal">
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/tyngScore"
+           android:textSize="50sp"
+           android:layout_alignParentRight="true"
+           android:layout_marginRight="125dp"
+           android:layout_marginTop="5dp">
+       </TextView>
+   </RelativeLayout>
     
 </LinearLayout>

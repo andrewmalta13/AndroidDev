@@ -39,6 +39,9 @@ public class MatchesAdapter extends ArrayAdapter<Object>{
 		TextView sportTV = (TextView) view.findViewById(R.id.sport_text);
 		sportTV.setText(match.getSport());
 		
+		TextView dateTime = (TextView) view.findViewById(R.id.time_text);
+		dateTime.setText(match.getDate().toLocaleString());
+		
 		return view;
 		
 	}

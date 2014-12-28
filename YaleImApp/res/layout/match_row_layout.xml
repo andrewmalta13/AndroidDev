@@ -9,8 +9,9 @@
     <ImageView
        android:layout_width="35dp"
        android:layout_height="40dp"
-       android:layout_marginLeft="10dp"
-       android:layout_marginTop="20dp"
+       android:layout_marginLeft="15dp"
+       android:layout_marginTop="45dp"
+       android:layout_marginRight="20dp"
        android:id="@+id/team1image"
       >
    </ImageView>
@@ -18,17 +19,18 @@
    <TextView
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
+       android:layout_marginTop="25dp"
        android:id="@+id/versus_text"
        android:textSize="30sp"
-       android:padding="15dp"
+       android:padding="25dp"
        android:text="@string/versus_text"
    ></TextView>
    
    <ImageView
        android:layout_width="35dp"
        android:layout_height="40dp"
-       android:layout_marginLeft="10dp"
-       android:layout_marginTop="20dp"
+       android:layout_marginLeft="20dp"
+       android:layout_marginTop="45dp"
        android:id="@+id/team2image"
       >
    </ImageView>
@@ -37,8 +39,10 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:id="@+id/sport_text"
+       android:layout_marginTop="25dp"
        android:textSize="30sp"
-       android:padding="15dp">
+       android:paddingLeft="40dp">
+       
    </TextView>
    
    <TextView
@@ -46,7 +50,7 @@
        android:layout_height="wrap_content"
        android:id="@+id/time_text"
        android:textSize="30sp"
-       android:padding="15dp">
+       android:padding="25dp">
    </TextView>
     
 

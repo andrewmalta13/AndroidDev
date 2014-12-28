@@ -24,7 +24,7 @@ public class StandingsAdapter extends ArrayAdapter<Object>{
 		
 		ResidentialCollege college = (ResidentialCollege) getItem(position);
 		TextView collegeView = (TextView) view.findViewById(R.id.standingsTextView);
-		collegeView.setText(college.getName());
+		collegeView.setText(getDisplayName(college.getName()));
 		
 		TextView scoreView = (TextView) view.findViewById(R.id.tyngScore);
 		scoreView.setText(getScore(college.getName()));
@@ -37,6 +37,17 @@ public class StandingsAdapter extends ArrayAdapter<Object>{
 		
 	}
     
+	//generate a string to display from a given residential college name to avoid
+	//long names messing up the display. E.G Johnathan Edwards
+	private String getDisplayName(String name) {
+		if(name.length() > 10){
+			return (name.substring(0, 7).toUpperCase() + " ...");
+		}
+		
+		else return name.toUpperCase();
+		
+	}
+
 	//dummy getScore module for now. Will eventually be parsing JSON from a site to get
 	//a given college's score.
 	private String getScore(String college) {
