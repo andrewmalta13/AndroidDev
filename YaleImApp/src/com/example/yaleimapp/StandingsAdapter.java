@@ -27,7 +27,7 @@ public class StandingsAdapter extends ArrayAdapter<Object>{
 		collegeView.setText(getDisplayName(college.getName()));
 		
 		TextView scoreView = (TextView) view.findViewById(R.id.tyngScore);
-		scoreView.setText(getScore(college.getName()));
+		scoreView.setText("" + college.getScore());
 		
 		
 		ImageView imageView = (ImageView) view.findViewById(R.id.resCollegeImage);
@@ -47,12 +47,6 @@ public class StandingsAdapter extends ArrayAdapter<Object>{
 		else return name.toUpperCase();
 		
 	}
-
-	//dummy getScore module for now. Will eventually be parsing JSON from a site to get
-	//a given college's score.
-	private String getScore(String college) {
-		int score = college.length() * 15;
-		return "" + score;
-	}	
+	
 
 }

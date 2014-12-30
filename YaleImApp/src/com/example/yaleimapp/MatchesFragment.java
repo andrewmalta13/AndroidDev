@@ -31,24 +31,24 @@ public class MatchesFragment extends ListFragment{
 	
 	//dummy encapsulated method that retrieves the matches list for the matches tab.
 	public Match[] getMatches(){
-		Match[] matches = {new Match(new ResidentialCollege("Berkeley", R.drawable.berkeley),
-                new ResidentialCollege("SayBrook", R.drawable.saybrook),
+		Match[] matches = {new Match(new ResidentialCollege("Berkeley", R.drawable.berkeley, 100),
+                new ResidentialCollege("SayBrook", R.drawable.saybrook, 100),
                 new Date(), "Soccer", "IM Fields"),
                 
-                new Match(new ResidentialCollege("Erza Stiles", R.drawable.erzastiles),
-                new ResidentialCollege("Johnathan Edwards", R.drawable.johnathanedwards),
+                new Match(new ResidentialCollege("Erza Stiles", R.drawable.erzastiles, 100),
+                new ResidentialCollege("Johnathan Edwards", R.drawable.johnathanedwards, 100),
                 new Date(), "Football", "IM Fields"),
 
-               new Match(new ResidentialCollege("Johnathan Edwards", R.drawable.johnathanedwards),
-               new ResidentialCollege("Trumbull", R.drawable.trumbull),
+               new Match(new ResidentialCollege("Johnathan Edwards", R.drawable.johnathanedwards, 100),
+               new ResidentialCollege("Trumbull", R.drawable.trumbull, 200),
                new Date(), "Football", "IM Fields"),
 
-               new Match(new ResidentialCollege("Calhoun", R.drawable.calhoun),
-               new ResidentialCollege("Silliman", R.drawable.silliman),
+               new Match(new ResidentialCollege("Calhoun", R.drawable.calhoun, 100),
+               new ResidentialCollege("Silliman", R.drawable.silliman, 100),
                new Date(), "Football", "IM Fields"),
                
-               new Match(new ResidentialCollege("Branford", R.drawable.branford),
-               new ResidentialCollege("berkeley", R.drawable.berkeley),
+               new Match(new ResidentialCollege("Branford", R.drawable.branford, 100),
+               new ResidentialCollege("berkeley", R.drawable.berkeley, 100),
                new Date(), "Football", "IM Fields")};
 		
 		return matches;
