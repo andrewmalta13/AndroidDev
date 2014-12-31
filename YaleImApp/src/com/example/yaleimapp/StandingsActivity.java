@@ -17,7 +17,6 @@ public class StandingsActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		//setContentView(R.layout.activity_standings);
 		
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -27,7 +26,6 @@ public class StandingsActivity extends Activity{
 	    		setTabListener(new MyTabListener<StandingsFragment>(this, "Standings", StandingsFragment.class));
 	    actionBar.addTab(standingsTab);
 	    
-	    //TODO change StandingsFragment to MatchesFragment when module is completed.
 	    Tab matchesTab = actionBar.newTab().setText("Matches").
 	    		setTabListener(new MyTabListener<MatchesFragment>(this, "Matches", MatchesFragment.class));
 	    actionBar.addTab(matchesTab);
@@ -35,7 +33,6 @@ public class StandingsActivity extends Activity{
 	    Tab sportsTab = actionBar.newTab().setText("Sports").
                 setTabListener(new MyTabListener<SportsFragment>(this, "Sports", SportsFragment.class));
 	    actionBar.addTab(sportsTab);
-			
 	}
 	
 	

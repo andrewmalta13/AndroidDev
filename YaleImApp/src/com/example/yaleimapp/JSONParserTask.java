@@ -1,69 +1,68 @@
 package com.example.yaleimapp;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class JSONParserTask{
-	InputStream inputStream = null;
-	String result = "";
+public class JSONParserTask extends AsyncTask<Void, Void, String>{
 	private String url = "http://yale-im.appspot.com";
-
-	public ResidentialCollege[] generateColleges(){
-	    String json = getJSON("");
-	    try {
-	      JSONObject jObject = new JSONObject();
-	      JSONObject scores = jObject.getJSONObject("scores");
-	      
-	      ResidentialCollege[] residentialColleges = {
-	          (new ResidentialCollege("Berkeley", R.drawable.berkeley, scores.getInt("berkeley"))),
-	          (new ResidentialCollege("Branford", R.drawable.branford, scores.getInt("branford"))),
-	          (new ResidentialCollege("Calhoun", R.drawable.calhoun, scores.getInt("calhoun"))),
-	          (new ResidentialCollege("Davenport", R.drawable.davenport, scores.getInt("davenport"))),
-	          (new ResidentialCollege("Erza Stiles", R.drawable.erzastiles, scores.getInt("erzastiles"))),
-	          (new ResidentialCollege("Johnathan Edwards", R.drawable.johnathanedwards, scores.getInt("johnathanedwards"))), 
-	          (new ResidentialCollege("Morse", R.drawable.morse, scores.getInt("morse"))),
-	          (new ResidentialCollege("Pierson", R.drawable.pierson, scores.getInt("pierson"))), 
-	          (new ResidentialCollege("Saybrook", R.drawable.saybrook, scores.getInt("saybrook"))),
-	          (new ResidentialCollege("Silliman", R.drawable.silliman, scores.getInt("silliman"))),
-	          (new ResidentialCollege("Timothy Dwight", R.drawable.timothydwight, scores.getInt("timothydwight"))),
-	          (new ResidentialCollege("Trumbull", R.drawable.trumbull, scores.getInt("trumbull")))};
-	       
-	      return residentialColleges;
-	      
-	    } catch (JSONException e) {
-	      e.printStackTrace();
-	    }
-	    
-	    return null;
-	  }
+    private Fragment parentFragment;
+    private String task;
+    
+    public JSONParserTask(Fragment a, String t){
+    	parentFragment = a;
+    	task = t;
+    }
 	
-	  public String getJSON(String url){
-		  try{
-		      HttpClient httpclient = new DefaultHttpClient();
-		      
-		      HttpGet request = new HttpGet();
-		      URI website = new URI("http://yale-im.appspot.com");
-		      request.setURI(website);
-		      HttpResponse response = httpclient.execute(request);
-		      
-		      //TODO continue the json fetch from the site. 
-		  }
-		  
-		  return result;
-	  }
+	@Override
+	protected String doInBackground(Void... params) {
+		HttpClient client = new DefaultHttpClient();
+		HttpGet get = new HttpGet(url);
+		String data = "";
+		try {
+			HttpResponse response = client.execute(get);
+			int status = response.getStatusLine().getStatusCode();
+			
+			if(status == 200){
+				HttpEntity entity = response.getEntity();
+				data = EntityUtils.toString(entity);
+			}
+			
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
+	
+	
+	@Override
+    protected void onPostExecute(String data) {
+		Log.e("data", " " + data);
+		if(task == "standings"){
+            ((StandingsFragment) this.parentFragment).generateColleges(data);
+		}
+	}
+	
 }
