@@ -47,9 +47,6 @@ public class MyTabListener<T extends Fragment> implements TabListener{
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-		
+		ft.attach(mFragment);
 	}
-
-
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -32,7 +34,8 @@ public class StandingsFragment extends ListFragment{
 	//dummy initialization for the res college list. Still need to figure out how to
 	//ensure the async task populates the list before the list adapter is called.
 	
-	private ResidentialCollege [] residentialCollegeList = {(new ResidentialCollege("Trumbull", R.drawable.trumbull, 1912))};
+	private ArrayList<ResidentialCollege> residentialCollegeList = new ArrayList<ResidentialCollege>();
+	StandingsAdapter adapter;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		return inflater.inflate(R.layout.standings_list_fragment, container, false);
@@ -41,12 +44,14 @@ public class StandingsFragment extends ListFragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
-
-        JSONParserTask parser = new JSONParserTask(this, "standings");
-        parser.execute();
         
-        ListAdapter adapter = new StandingsAdapter(getActivity(), residentialCollegeList);
-	    setListAdapter(adapter);  
+	    if(residentialCollegeList.isEmpty()){
+            JSONParserTask parser = new JSONParserTask(this, "standings");
+            parser.execute();
+	    }
+	    
+        adapter = new StandingsAdapter(getActivity(), residentialCollegeList);
+        setListAdapter(adapter);
 	}
 	
 	//TO DO, Make an intent for an Activity that displays a particular College Page
@@ -56,35 +61,39 @@ public class StandingsFragment extends ListFragment{
 	
 	
 	public void generateColleges(String json){
-
-		
 	    try {
-	      JSONObject jObject = new JSONObject(json);
-	      JSONObject scores = jObject.getJSONObject("scores");
+	        JSONObject jObject = new JSONObject(json);
+	        JSONObject scores = jObject.getJSONObject("scores");
 	      
-	      ResidentialCollege[] residentialColleges = {
-	          (new ResidentialCollege("Berkeley", R.drawable.berkeley, scores.getInt("berkeley"))),
-	          (new ResidentialCollege("Branford", R.drawable.branford, scores.getInt("branford"))),
-	          (new ResidentialCollege("Calhoun", R.drawable.calhoun, scores.getInt("calhoun"))),
-	          (new ResidentialCollege("Davenport", R.drawable.davenport, scores.getInt("davenport"))),
-	          (new ResidentialCollege("Erza Stiles", R.drawable.erzastiles, scores.getInt("erzastiles"))),
-	          (new ResidentialCollege("Johnathan Edwards", R.drawable.johnathanedwards, scores.getInt("johnathanedwards"))), 
-	          (new ResidentialCollege("Morse", R.drawable.morse, scores.getInt("morse"))),
-	          (new ResidentialCollege("Pierson", R.drawable.pierson, scores.getInt("pierson"))), 
-	          (new ResidentialCollege("Saybrook", R.drawable.saybrook, scores.getInt("saybrook"))),
-	          (new ResidentialCollege("Silliman", R.drawable.silliman, scores.getInt("silliman"))),
-	          (new ResidentialCollege("Timothy Dwight", R.drawable.timothydwight, scores.getInt("timothydwight"))),
-	          (new ResidentialCollege("Trumbull", R.drawable.trumbull, scores.getInt("trumbull")))};
+	        ArrayList<ResidentialCollege> residentialColleges = new ArrayList<ResidentialCollege>();
+	        residentialColleges.add(new ResidentialCollege("Berkeley", R.drawable.berkeley, scores.getInt("berkeley")));
+	        residentialColleges.add(new ResidentialCollege("Branford", R.drawable.branford, scores.getInt("branford")));
+	        residentialColleges.add(new ResidentialCollege("Calhoun", R.drawable.calhoun, scores.getInt("calhoun")));
+	        residentialColleges.add(new ResidentialCollege("Davenport", R.drawable.davenport, scores.getInt("davenport")));
+	        residentialColleges.add(new ResidentialCollege("Erza Stiles", R.drawable.erzastiles, scores.getInt("erzastiles")));
+	        residentialColleges.add(new ResidentialCollege("Johnathan Edwards", R.drawable.johnathanedwards, scores.getInt("johnathanedwards"))); 
+	        residentialColleges.add(new ResidentialCollege("Morse", R.drawable.morse, scores.getInt("morse")));
+	        residentialColleges.add(new ResidentialCollege("Pierson", R.drawable.pierson, scores.getInt("pierson"))); 
+	        residentialColleges.add(new ResidentialCollege("Saybrook", R.drawable.saybrook, scores.getInt("saybrook")));
+	        residentialColleges.add(new ResidentialCollege("Silliman", R.drawable.silliman, scores.getInt("silliman")));
+	        residentialColleges.add(new ResidentialCollege("Timothy Dwight", R.drawable.timothydwight, scores.getInt("timothydwight")));
+	        residentialColleges.add(new ResidentialCollege("Trumbull", R.drawable.trumbull, scores.getInt("trumbull")));
 	       
-	       residentialCollegeList = residentialColleges;
 	      
+	        //check to see if the adapter has been initialized yet. If it has been, update the
+	        //residential college list because the get json task is done.
+	        if(adapter != null){
+	    	    adapter.updateStandings(adapter.sortByScore(residentialColleges));
+	        }
+	        else{
+	    	    residentialCollegeList = residentialColleges;
+	        }
 	    } catch (JSONException e) {
-	      e.printStackTrace();
+	        e.printStackTrace();
 	    }
 	    
 	}
-	
-	
+
 }
 
 	

@@ -1,7 +1,10 @@
 package com.example.yaleimapp;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class StandingsAdapter extends ArrayAdapter<Object>{
-
-	public StandingsAdapter(Context context, ResidentialCollege[] colleges) {
+public class StandingsAdapter extends ArrayAdapter<ResidentialCollege>{
+	
+	public StandingsAdapter(Context context, ArrayList<ResidentialCollege> colleges) {
 		super(context, R.layout.row_layout, colleges);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -43,10 +45,38 @@ public class StandingsAdapter extends ArrayAdapter<Object>{
 		if(name.length() > 10){
 			return (name.substring(0, 7).toUpperCase() + " ...");
 		}
-		
 		else return name.toUpperCase();
-		
 	}
 	
-
+	public void updateStandings(ArrayList<ResidentialCollege> newResList) {
+	    this.clear();
+	    for(ResidentialCollege res : newResList){
+	    	this.add(res);
+	    }
+	    this.notifyDataSetChanged();
+	}
+	
+	//perform a simple insertion sort(only 12 elements, so should be fast enough)
+	public ArrayList<ResidentialCollege> sortByScore(ArrayList<ResidentialCollege> listToSort){
+		ArrayList<ResidentialCollege> sorted = new ArrayList<ResidentialCollege>();
+		sorted.add(listToSort.get(0));
+		listToSort.remove(0);
+		
+		for(ResidentialCollege college : listToSort){
+			for(int i = 0; i < sorted.size(); i++){
+				if(college.getScore() >= sorted.get(i).getScore()){
+					sorted.add(i, college);
+					Log.d("inserted:", college.getName() + " " + "at position " + i);
+					break;
+				}
+				//add it to the end it has the lowest score seen so far.
+				else if(i == (sorted.size() - 1)){
+					sorted.add(college);
+					Log.d("appended:", college.getName() + " " + "at position" + i);
+					break;
+				}
+			}
+		}
+		return sorted;
+	}
 }

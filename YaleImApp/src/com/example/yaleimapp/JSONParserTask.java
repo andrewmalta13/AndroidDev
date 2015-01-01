@@ -59,9 +59,8 @@ public class JSONParserTask extends AsyncTask<Void, Void, String>{
 	
 	@Override
     protected void onPostExecute(String data) {
-		Log.e("data", " " + data);
 		if(task == "standings"){
-            ((StandingsFragment) this.parentFragment).generateColleges(data);
+            ((StandingsFragment) this.parentFragment).generateColleges(data);  
 		}
 	}
 	
