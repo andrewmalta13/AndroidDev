@@ -1,20 +1,31 @@
 package com.example.yaleimapp;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.ListFragment;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class MatchesFragment extends ListFragment{
-	final Match[] matches = getMatches();
+	private ArrayList<Match> matches = new ArrayList<Match>();
+	private MatchesAdapter adapter;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		return inflater.inflate(R.layout.matches_list_fragment, container, false);
@@ -23,35 +34,67 @@ public class MatchesFragment extends ListFragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
-       
+        
+	    if(matches.isEmpty()){
+            JSONParserTask parser = new JSONParserTask(this, "matches");
+            parser.execute();
+	    }
 	    
-	    ListAdapter adapter = new MatchesAdapter(getActivity(), matches);
+	    adapter = new MatchesAdapter(getActivity(), matches);
 	    setListAdapter(adapter);  
 	}
 	
 	//dummy encapsulated method that retrieves the matches list for the matches tab.
-	public Match[] getMatches(){
-		Match[] matches = {new Match(new ResidentialCollege("Berkeley", R.drawable.berkeley, 100),
-                new ResidentialCollege("SayBrook", R.drawable.saybrook, 100),
-                new Date(), "Soccer", "IM Fields"),
-                
-                new Match(new ResidentialCollege("Erza Stiles", R.drawable.erzastiles, 100),
-                new ResidentialCollege("Johnathan Edwards", R.drawable.johnathanedwards, 100),
-                new Date(), "Football", "IM Fields"),
-
-               new Match(new ResidentialCollege("Johnathan Edwards", R.drawable.johnathanedwards, 100),
-               new ResidentialCollege("Trumbull", R.drawable.trumbull, 200),
-               new Date(), "Football", "IM Fields"),
-
-               new Match(new ResidentialCollege("Calhoun", R.drawable.calhoun, 100),
-               new ResidentialCollege("Silliman", R.drawable.silliman, 100),
-               new Date(), "Football", "IM Fields"),
-               
-               new Match(new ResidentialCollege("Branford", R.drawable.branford, 100),
-               new ResidentialCollege("berkeley", R.drawable.berkeley, 100),
-               new Date(), "Football", "IM Fields")};
+	@SuppressWarnings("deprecation")
+	public void generateMatches(String json){
+		ArrayList<Match> matchList = new ArrayList<Match>();
+		try{
+		    JSONObject jObject = new JSONObject(json);
+            JSONArray matchesArray = jObject.getJSONArray("matches");
+        
+            for(int i = 0; i < matchesArray.length(); i++){
+                JSONObject match = (JSONObject) matchesArray.get(i);
+                JSONObject date = (JSONObject) match.get("date");
+            
+                Date d = new Date();
+                d.setMinutes(Integer.parseInt(date.getString("minutes")));
+                d.setHours(Integer.parseInt(date.getString("hour")));
+                d.setDate(Integer.parseInt(date.getString("day")));
+                d.setMonth(Integer.parseInt(date.getString("month")));
+            
+                String team1 = match.getString("team1");
+                String team2 = match.getString("team2");
+                ResidentialCollege college1 = new ResidentialCollege(team1, getDrawableRes(team1), 0); //score field not used in this fragment.
+                ResidentialCollege college2 = new ResidentialCollege(team2, getDrawableRes(team2), 0); //score field not used in this fragment.
+            
+                String sport = match.getString("sport");
+                String location = match.getString("location");
+             
+                matchList.add((new Match(college1, college2, d, sport, location)));
+            }
+            if(adapter != null){
+        	    adapter.updateMatches(matchList);
+            }
+            else{
+        	    matches = matchList;
+            }
+        }
 		
-		return matches;
+		catch(Exception e){
+			Log.e("json parsing", "error parsing json_");
+		}
+        
 	}
 	
+	//gets the integer mapped to the drawable resource to be displayed from a given string.
+	//otherwise returns -1. 
+	public int getDrawableRes(String name){
+		Activity c = getActivity();
+	    int resourceId = c.getApplicationContext().getResources().getIdentifier(name, "drawable", c.getPackageName());
+	    if(resourceId == 0){
+	        return -1;
+	    } else {
+	        return resourceId;
+	    }
+	}
 }

@@ -1,5 +1,6 @@
 package com.example.yaleimapp;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.Context;
@@ -10,11 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MatchesAdapter extends ArrayAdapter<Object>{
+public class MatchesAdapter extends ArrayAdapter<Match>{
 
-	public MatchesAdapter(Context context, Match[] matches) {
+	public MatchesAdapter(Context context, ArrayList<Match> matches) {
 		super(context, R.layout.match_row_layout, matches);
-
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent){
@@ -46,4 +46,11 @@ public class MatchesAdapter extends ArrayAdapter<Object>{
 		
 	}
 
+	public void updateMatches(ArrayList<Match> newMatchList) {
+		this.clear();
+	    for(Match m : newMatchList){
+	    	this.add(m);
+	    }
+	    this.notifyDataSetChanged();
+	}
 }

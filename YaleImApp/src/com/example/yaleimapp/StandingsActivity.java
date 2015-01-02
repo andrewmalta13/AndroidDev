@@ -30,8 +30,8 @@ public class StandingsActivity extends Activity{
 	    		setTabListener(new MyTabListener<MatchesFragment>(this, "Matches", MatchesFragment.class));
 	    actionBar.addTab(matchesTab);
 	    
-	    Tab sportsTab = actionBar.newTab().setText("Sports").
-                setTabListener(new MyTabListener<SportsFragment>(this, "Sports", SportsFragment.class));
+	    Tab sportsTab = actionBar.newTab().setText("Teams").
+                setTabListener(new MyTabListener<TeamsFragment>(this, "Sports", TeamsFragment.class));
 	    actionBar.addTab(sportsTab);
 	}
 	

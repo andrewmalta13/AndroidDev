@@ -35,7 +35,7 @@ public class StandingsFragment extends ListFragment{
 	//ensure the async task populates the list before the list adapter is called.
 	
 	private ArrayList<ResidentialCollege> residentialCollegeList = new ArrayList<ResidentialCollege>();
-	StandingsAdapter adapter;
+	private StandingsAdapter adapter;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		return inflater.inflate(R.layout.standings_list_fragment, container, false);

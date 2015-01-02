@@ -9,11 +9,11 @@ public class Match{
 	private String location;  //possibly can switch this out to a google maps location and link incorporate
 							  //a get directions capability.
 	
-	public Match(ResidentialCollege teamOne, ResidentialCollege teamTwo, Date d, String s, String loc){
+	public Match(ResidentialCollege teamOne, ResidentialCollege teamTwo, Date d, String spt, String loc){
 		team1 = teamOne;
 		team2 = teamTwo;
 		date = d;
-		sport = s;
+		sport = spt;
 		location = loc;
 	}
 	
