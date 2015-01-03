@@ -36,7 +36,7 @@ public class MatchesFragment extends ListFragment{
 	    super.onActivityCreated(savedInstanceState);
         
 	    if(matches.isEmpty()){
-            JSONParserTask parser = new JSONParserTask(this, "matches");
+            JSONParserTask parser = new JSONParserTask(this, "matches", "http://yale-im.appspot.com/matches.json");
             parser.execute();
 	    }
 	    

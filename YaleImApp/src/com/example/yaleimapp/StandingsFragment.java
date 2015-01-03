@@ -46,7 +46,7 @@ public class StandingsFragment extends ListFragment{
 	    super.onActivityCreated(savedInstanceState);
         
 	    if(residentialCollegeList.isEmpty()){
-            JSONParserTask parser = new JSONParserTask(this, "standings");
+            JSONParserTask parser = new JSONParserTask(this, "standings", "http://yale-im.appspot.com/scores.json");
             parser.execute();
 	    }
 	    

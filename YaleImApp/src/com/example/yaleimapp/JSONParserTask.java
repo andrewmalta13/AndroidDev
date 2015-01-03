@@ -28,9 +28,10 @@ public class JSONParserTask extends AsyncTask<Void, Void, String>{
     private Fragment parentFragment;
     private String task;
     
-    public JSONParserTask(Fragment a, String t){
+    public JSONParserTask(Fragment a, String t, String jsonurl){
     	parentFragment = a;
     	task = t;
+    	url = jsonurl;
     }
 	
 	@Override
