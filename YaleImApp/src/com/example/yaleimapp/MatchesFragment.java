@@ -19,8 +19,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MatchesFragment extends ListFragment{
@@ -34,7 +36,20 @@ public class MatchesFragment extends ListFragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
-        
+	    
+	    //code for initializing a spinner (drop down list) for filtering matches by college
+	    Spinner collegeFilterSpinner = (Spinner) getView().findViewById(R.id.matches_college_spinner);
+	    ArrayAdapter<CharSequence> collegeSpinnerAdapter = ArrayAdapter.createFromResource(this.getActivity(),
+	    		R.array.colleges_array, android.R.layout.simple_spinner_item);
+	    collegeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    collegeFilterSpinner.setAdapter(collegeSpinnerAdapter);
+	    
+	    Spinner timeFilterSpinner = (Spinner) getView().findViewById(R.id.matches_time_spinner);
+	    ArrayAdapter<CharSequence> timeSpinnerAdapter = ArrayAdapter.createFromResource(this.getActivity(),
+	    		R.array.time_filter_choices_array, android.R.layout.simple_spinner_item);
+	    timeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    timeFilterSpinner.setAdapter(timeSpinnerAdapter);
+	    
 	    if(matches.isEmpty()){
             JSONParserTask parser = new JSONParserTask(this, "matches", "http://yale-im.appspot.com/matches.json");
             parser.execute();
@@ -81,7 +96,7 @@ public class MatchesFragment extends ListFragment{
         }
 		
 		catch(Exception e){
-			Log.e("json parsing", "error parsing json_");
+			Log.e("json parsing", "error parsing json" + e.toString());
 		}
         
 	}
