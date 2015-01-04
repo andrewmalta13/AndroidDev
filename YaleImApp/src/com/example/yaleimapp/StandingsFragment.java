@@ -1,32 +1,17 @@
 package com.example.yaleimapp;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.util.EntityUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 public class StandingsFragment extends ListFragment{
@@ -80,14 +65,10 @@ public class StandingsFragment extends ListFragment{
 	        residentialColleges.add(new ResidentialCollege("Trumbull", R.drawable.trumbull, scores.getInt("trumbull")));
 	       
 	      
-	        //check to see if the adapter has been initialized yet. If it has been, update the
-	        //residential college list because the get json task is done.
-	        if(adapter != null){
-	    	    adapter.updateStandings(adapter.sortByScore(residentialColleges));
-	        }
-	        else{
-	    	    residentialCollegeList = residentialColleges;
-	        }
+	        //update the residential college list because the get json task is done.
+	    	adapter.updateStandings(adapter.sortByScore(residentialColleges));
+	    	residentialCollegeList = residentialColleges;
+	    	    
 	    } catch (JSONException e) {
 	        e.printStackTrace();
 	    }

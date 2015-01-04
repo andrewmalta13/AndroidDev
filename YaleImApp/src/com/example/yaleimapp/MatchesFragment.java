@@ -8,24 +8,20 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.ListFragment;
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
-public class MatchesFragment extends ListFragment{
+
+public class MatchesFragment extends ListFragment implements OnItemSelectedListener{
 	private ArrayList<Match> matches = new ArrayList<Match>();
 	private MatchesAdapter adapter;
 	
@@ -43,12 +39,14 @@ public class MatchesFragment extends ListFragment{
 	    		R.array.colleges_array, android.R.layout.simple_spinner_item);
 	    collegeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	    collegeFilterSpinner.setAdapter(collegeSpinnerAdapter);
+	    collegeFilterSpinner.setOnItemSelectedListener(this);
 	    
 	    Spinner timeFilterSpinner = (Spinner) getView().findViewById(R.id.matches_time_spinner);
 	    ArrayAdapter<CharSequence> timeSpinnerAdapter = ArrayAdapter.createFromResource(this.getActivity(),
 	    		R.array.time_filter_choices_array, android.R.layout.simple_spinner_item);
 	    timeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	    timeFilterSpinner.setAdapter(timeSpinnerAdapter);
+	    timeFilterSpinner.setOnItemSelectedListener(this);
 	    
 	    if(matches.isEmpty()){
             JSONParserTask parser = new JSONParserTask(this, "matches", "http://yale-im.appspot.com/matches.json");
@@ -56,7 +54,8 @@ public class MatchesFragment extends ListFragment{
 	    }
 	    
 	    adapter = new MatchesAdapter(getActivity(), matches);
-	    setListAdapter(adapter);  
+	    setListAdapter(adapter);
+	    
 	}
 	
 	//dummy encapsulated method that retrieves the matches list for the matches tab.
@@ -87,12 +86,11 @@ public class MatchesFragment extends ListFragment{
              
                 matchList.add((new Match(college1, college2, d, sport, location)));
             }
-            if(adapter != null){
+            	
+                matches = matchList;
         	    adapter.updateMatches(matchList);
-            }
-            else{
-        	    matches = matchList;
-            }
+        	    
+        	    
         }
 		
 		catch(Exception e){
@@ -111,5 +109,50 @@ public class MatchesFragment extends ListFragment{
 	    } else {
 	        return resourceId;
 	    }
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+		Spinner spinner = (Spinner) parent;
+		String itemSelected = (String) parent.getItemAtPosition(position);
+		
+		if(spinner.getId() == R.id.matches_college_spinner){
+			Log.d("selected:", itemSelected + " Formatted: " + formatCollegeName(itemSelected));
+			filterMacthesByCollege(formatCollegeName(itemSelected));
+		}
+		else if(spinner.getId() == R.id.matches_time_spinner){
+			filterMatchesByDate(parent.getItemAtPosition(position).toString());
+		}
+	}
+    
+	
+	//TODO, implement a filter by date function
+	private void filterMatchesByDate(String itemAtPosition) {
+		int i = 5; //dummy code 
+	}
+    
+	
+	//update the match list to include only the matches involving the desired team.
+	private void filterMacthesByCollege(String formatedCollegeName) {
+		ArrayList<Match> filteredMatches = new ArrayList<Match>();
+		for(Match match : matches){
+			if (match.getTeam1().getName().equals(formatedCollegeName) || match.getTeam2().getName().equals(formatedCollegeName)){
+				filteredMatches.add(match);
+			}
+		}
+		adapter.updateMatches(filteredMatches);
+	}
+
+	//change a college name from the spinner to one that we can search the matches for
+	//e.g formateCollegeName("Johnathan Edwards") ==> "johnathanedwards"
+	private String formatCollegeName(String collegeName) {
+		String newName = collegeName.toLowerCase();
+		newName.replaceAll(" ", ""); //eliminate spaces.
+		return newName;
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+		
 	}
 }
