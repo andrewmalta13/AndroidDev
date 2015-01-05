@@ -34,7 +34,7 @@ public class StandingsFragment extends ListFragment{
             JSONParserTask parser = new JSONParserTask(this, "standings", "http://yale-im.appspot.com/scores.json");
             parser.execute();
 	    }
-	    
+	
         adapter = new StandingsAdapter(getActivity(), residentialCollegeList);
         setListAdapter(adapter);
 	}
@@ -51,23 +51,24 @@ public class StandingsFragment extends ListFragment{
 	        JSONObject scores = jObject.getJSONObject("scores");
 	      
 	        ArrayList<ResidentialCollege> residentialColleges = new ArrayList<ResidentialCollege>();
-	        residentialColleges.add(new ResidentialCollege("Berkeley", R.drawable.berkeley, scores.getInt("berkeley")));
-	        residentialColleges.add(new ResidentialCollege("Branford", R.drawable.branford, scores.getInt("branford")));
-	        residentialColleges.add(new ResidentialCollege("Calhoun", R.drawable.calhoun, scores.getInt("calhoun")));
-	        residentialColleges.add(new ResidentialCollege("Davenport", R.drawable.davenport, scores.getInt("davenport")));
-	        residentialColleges.add(new ResidentialCollege("Erza Stiles", R.drawable.erzastiles, scores.getInt("erzastiles")));
-	        residentialColleges.add(new ResidentialCollege("Johnathan Edwards", R.drawable.johnathanedwards, scores.getInt("johnathanedwards"))); 
-	        residentialColleges.add(new ResidentialCollege("Morse", R.drawable.morse, scores.getInt("morse")));
-	        residentialColleges.add(new ResidentialCollege("Pierson", R.drawable.pierson, scores.getInt("pierson"))); 
-	        residentialColleges.add(new ResidentialCollege("Saybrook", R.drawable.saybrook, scores.getInt("saybrook")));
-	        residentialColleges.add(new ResidentialCollege("Silliman", R.drawable.silliman, scores.getInt("silliman")));
-	        residentialColleges.add(new ResidentialCollege("Timothy Dwight", R.drawable.timothydwight, scores.getInt("timothydwight")));
-	        residentialColleges.add(new ResidentialCollege("Trumbull", R.drawable.trumbull, scores.getInt("trumbull")));
+	        residentialColleges.add(new ResidentialCollege("Berkeley", R.drawable.berkeley, scores.getDouble("berkeley")));
+	        residentialColleges.add(new ResidentialCollege("Branford", R.drawable.branford, scores.getDouble("branford")));
+	        residentialColleges.add(new ResidentialCollege("Calhoun", R.drawable.calhoun, scores.getDouble("calhoun")));
+	        residentialColleges.add(new ResidentialCollege("Davenport", R.drawable.davenport, scores.getDouble("davenport")));
+	        residentialColleges.add(new ResidentialCollege("Erza Stiles", R.drawable.erzastiles, scores.getDouble("erzastiles")));
+	        residentialColleges.add(new ResidentialCollege("Johnathan Edwards", R.drawable.johnathanedwards, scores.getDouble("johnathanedwards"))); 
+	        residentialColleges.add(new ResidentialCollege("Morse", R.drawable.morse, scores.getDouble("morse")));
+	        residentialColleges.add(new ResidentialCollege("Pierson", R.drawable.pierson, scores.getDouble("pierson"))); 
+	        residentialColleges.add(new ResidentialCollege("Saybrook", R.drawable.saybrook, scores.getDouble("saybrook")));
+	        residentialColleges.add(new ResidentialCollege("Silliman", R.drawable.silliman, scores.getDouble("silliman")));
+	        residentialColleges.add(new ResidentialCollege("Timothy Dwight", R.drawable.timothydwight, scores.getDouble("timothydwight")));
+	        residentialColleges.add(new ResidentialCollege("Trumbull", R.drawable.trumbull, scores.getDouble("trumbull")));
 	       
 	      
 	        //update the residential college list because the get json task is done.
-	    	adapter.updateStandings(adapter.sortByScore(residentialColleges));
-	    	residentialCollegeList = residentialColleges;
+	        residentialCollegeList = adapter.sortByScore(residentialColleges);
+	    	adapter.updateStandings(residentialCollegeList);
+	    	
 	    	    
 	    } catch (JSONException e) {
 	        e.printStackTrace();

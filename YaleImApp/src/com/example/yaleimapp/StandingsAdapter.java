@@ -29,7 +29,7 @@ public class StandingsAdapter extends ArrayAdapter<ResidentialCollege>{
 		collegeView.setText(getDisplayName(college.getName()));
 		
 		TextView scoreView = (TextView) view.findViewById(R.id.tyngScore);
-		scoreView.setText("" + college.getScore());
+		scoreView.setText("" + getDisplayScore(college.getScore()));
 		
 		
 		ImageView imageView = (ImageView) view.findViewById(R.id.resCollegeImage);
@@ -46,6 +46,17 @@ public class StandingsAdapter extends ArrayAdapter<ResidentialCollege>{
 			return (name.substring(0, 7).toUpperCase() + " ...");
 		}
 		else return name.toUpperCase();
+	}
+	
+	//to get rid of the .0's at the end of the scores that are integers.
+	//Came at the cost of allowing scores to have .5's forcing floating point numbers.
+	private String getDisplayScore(Double score){
+		if((score % 1) == 0){
+			return "" + score.intValue();
+		}
+		else{
+			return "" + score;
+		}
 	}
 	
 	public void updateStandings(ArrayList<ResidentialCollege> newResList) {

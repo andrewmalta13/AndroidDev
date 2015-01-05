@@ -2,11 +2,13 @@ package com.example.yaleimapp;
 
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -18,7 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
+
 
 
 public class MatchesFragment extends ListFragment implements OnItemSelectedListener{
@@ -50,16 +52,16 @@ public class MatchesFragment extends ListFragment implements OnItemSelectedListe
 	    
 	    if(matches.isEmpty()){
             JSONParserTask parser = new JSONParserTask(this, "matches", "http://yale-im.appspot.com/matches.json");
-            parser.execute();
+            parser.execute();        
 	    }
 	    
 	    adapter = new MatchesAdapter(getActivity(), matches);
 	    setListAdapter(adapter);
+
 	    
 	}
 	
 	//dummy encapsulated method that retrieves the matches list for the matches tab.
-	@SuppressWarnings("deprecation")
 	public void generateMatches(String json){
 		ArrayList<Match> matchList = new ArrayList<Match>();
 		try{
@@ -70,16 +72,17 @@ public class MatchesFragment extends ListFragment implements OnItemSelectedListe
                 JSONObject match = (JSONObject) matchesArray.get(i);
                 JSONObject date = (JSONObject) match.get("date");
             
-                Date d = new Date();
-                d.setMinutes(Integer.parseInt(date.getString("minutes")));
-                d.setHours(Integer.parseInt(date.getString("hour")));
-                d.setDate(Integer.parseInt(date.getString("day")));
-                d.setMonth(Integer.parseInt(date.getString("month")));
+                Calendar d = Calendar.getInstance();
+                d.set(Integer.parseInt(date.getString("year")),
+                	  Integer.parseInt(date.getString("month")) - 1, //to adjust for the zero based month numbering in calendar
+                	  Integer.parseInt(date.getString("day")),
+                	  Integer.parseInt(date.getString("hour")),
+                	  Integer.parseInt(date.getString("minutes")));
             
                 String team1 = match.getString("team1");
                 String team2 = match.getString("team2");
-                ResidentialCollege college1 = new ResidentialCollege(team1, getDrawableRes(team1), 0); //score field not used in this fragment.
-                ResidentialCollege college2 = new ResidentialCollege(team2, getDrawableRes(team2), 0); //score field not used in this fragment.
+                ResidentialCollege college1 = new ResidentialCollege(team1, getDrawableRes(team1), (double) 0); //score field not used in this fragment.
+                ResidentialCollege college2 = new ResidentialCollege(team2, getDrawableRes(team2), (double) 0); //score field not used in this fragment.
             
                 String sport = match.getString("sport");
                 String location = match.getString("location");
@@ -115,41 +118,98 @@ public class MatchesFragment extends ListFragment implements OnItemSelectedListe
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		Spinner spinner = (Spinner) parent;
 		String itemSelected = (String) parent.getItemAtPosition(position);
-		
-		if(spinner.getId() == R.id.matches_college_spinner){
-			Log.d("selected:", itemSelected + " Formatted: " + formatCollegeName(itemSelected));
-			filterMacthesByCollege(formatCollegeName(itemSelected));
-		}
-		else if(spinner.getId() == R.id.matches_time_spinner){
-			filterMatchesByDate(parent.getItemAtPosition(position).toString());
-		}
-	}
-    
-	
-	//TODO, implement a filter by date function
-	private void filterMatchesByDate(String itemAtPosition) {
-		int i = 5; //dummy code 
-	}
-    
-	
-	//update the match list to include only the matches involving the desired team.
-	private void filterMacthesByCollege(String formatedCollegeName) {
 		ArrayList<Match> filteredMatches = new ArrayList<Match>();
-		for(Match match : matches){
-			if (match.getTeam1().getName().equals(formatedCollegeName) || match.getTeam2().getName().equals(formatedCollegeName)){
-				filteredMatches.add(match);
+		
+		//input event is a filter to the colleges, apply the time filter first to the list of matches
+		//then perform the college filter on the resultant matches list.
+		if(spinner.getId() == R.id.matches_college_spinner){
+			Spinner timeFilterSpinner = ((Spinner) getView().findViewById(R.id.matches_time_spinner));
+			String filter = (String)timeFilterSpinner.getItemAtPosition(timeFilterSpinner.getSelectedItemPosition());
+			filteredMatches = filterMatchesByDate(filter, matches);
+			
+			Log.d("match length", "after sorting by " + filter + " by Date, is " + filteredMatches.size());
+			
+			filteredMatches = filterMatchesByCollege(formatCollegeInput(itemSelected), filteredMatches);
+			Log.d("match length", "after sorting by " + itemSelected + " by College, is " + filteredMatches.size());
+		}
+		
+		//input event is a filter to the date, apply the time filter first to the list of matches
+		//then perform the college filter on the resultant matches list.
+		else if(spinner.getId() == R.id.matches_time_spinner){
+			Spinner collegeFilterSpinner = ((Spinner) getView().findViewById(R.id.matches_college_spinner));
+			String filter = (String)collegeFilterSpinner.getItemAtPosition(collegeFilterSpinner.getSelectedItemPosition());
+			filteredMatches = filterMatchesByCollege(formatCollegeInput(filter), matches);
+			Log.d("match length", "after sorting by " + filter + " by College, is " + filteredMatches.size());
+
+			filteredMatches = filterMatchesByDate(itemSelected, filteredMatches);
+			Log.d("match length", "after sorting by " + itemSelected + " by Date, is " + filteredMatches.size());
+		}
+		
+		adapter.updateMatches(filteredMatches); //update the matches list to be displayed according to the filters.
+	}
+    
+	
+	private ArrayList<Match> filterMatchesByDate(String timeFilter, ArrayList<Match> listToFilter) {
+		ArrayList<Match> filteredMatches = new ArrayList<Match>();
+		Calendar now = Calendar.getInstance();
+		
+		if(timeFilter.equals("Today")){
+			for(Match match : listToFilter){
+				if((now.get(Calendar.YEAR) == match.getDate().get(Calendar.YEAR)) &&
+		                  (now.get(Calendar.DAY_OF_YEAR) == match.getDate().get(Calendar.DAY_OF_YEAR))){
+					filteredMatches.add(match);
+				}
 			}
 		}
-		adapter.updateMatches(filteredMatches);
+		else if(timeFilter.equals("This Week")){
+			for(Match match : listToFilter){
+				if((now.get(Calendar.YEAR) == match.getDate().get(Calendar.YEAR)) &&
+						(now.get(Calendar.WEEK_OF_YEAR) == match.getDate().get(Calendar.WEEK_OF_YEAR))){
+					filteredMatches.add(match);
+				}
+			}
+		}
+		else if(timeFilter.equals("This Month")){
+			for(Match match : listToFilter){
+				if((now.get(Calendar.YEAR) == match.getDate().get(Calendar.YEAR)) &&
+						(now.get(Calendar.MONTH) == match.getDate().get(Calendar.MONTH))){
+					filteredMatches.add(match);
+				}
+			}
+		}
+		
+		else if(timeFilter.equals("All")){
+			filteredMatches = listToFilter;
+		}
+		
+		return filteredMatches;
+	}
+    
+	//update the match list to include only the matches involving the desired team.
+	private ArrayList<Match> filterMatchesByCollege(String formatedCollegeName, ArrayList<Match> listToFilter) {
+		ArrayList<Match> filteredMatches = new ArrayList<Match>();
+		
+		if(formatedCollegeName.equals("all")){
+			filteredMatches = listToFilter;
+		}
+		else{
+			for(Match match : listToFilter){
+			    if (match.getTeam1().getName().equals(formatedCollegeName) || match.getTeam2().getName().equals(formatedCollegeName)){
+				    filteredMatches.add(match);
+			   }
+		    }
+		}
+		
+		return filteredMatches;
 	}
 
 	//change a college name from the spinner to one that we can search the matches for
 	//e.g formateCollegeName("Johnathan Edwards") ==> "johnathanedwards"
-	private String formatCollegeName(String collegeName) {
-		String newName = collegeName.toLowerCase();
-		newName.replaceAll(" ", ""); //eliminate spaces.
-		return newName;
-	}
+	@SuppressLint("DefaultLocale")
+	private static String formatCollegeInput(String collegeName) {
+	    String newName = collegeName.replaceAll(" ", ""); //remove all spaces.
+	    return newName.toLowerCase();
+	} 
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {

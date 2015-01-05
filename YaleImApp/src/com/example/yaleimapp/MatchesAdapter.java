@@ -1,6 +1,8 @@
 package com.example.yaleimapp;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.content.Context;
@@ -40,7 +42,9 @@ public class MatchesAdapter extends ArrayAdapter<Match>{
 		sportTV.setText(match.getSport());
 		
 		TextView dateTime = (TextView) view.findViewById(R.id.time_text);
-		dateTime.setText(match.getDate().toLocaleString());
+		Calendar date = match.getDate();
+        SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat.getDateTimeInstance();
+		dateTime.setText(format.format(date.getTime()));
 		
 		return view;
 		

@@ -3,9 +3,9 @@ package com.example.yaleimapp;
 public class ResidentialCollege {
 	private String name;
 	private int imgResource;
-	private int tyngScore;
+	private Double tyngScore;
 	
-	public ResidentialCollege(String n, int imgRes, int score){
+	public ResidentialCollege(String n, int imgRes, Double score){
 		name = n;
 		imgResource = imgRes;
 		tyngScore = score;
@@ -19,7 +19,7 @@ public class ResidentialCollege {
 		return imgResource;
 	}
 	
-	public int getScore(){
+	public Double getScore(){
 		return tyngScore;
 	}
 }
