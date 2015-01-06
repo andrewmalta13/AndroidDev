@@ -16,13 +16,13 @@ import android.widget.TextView;
 public class MatchesAdapter extends ArrayAdapter<Match>{
 
 	public MatchesAdapter(Context context, ArrayList<Match> matches) {
-		super(context, R.layout.match_row_layout, matches);
+		super(context, R.layout.matches_row_layout, matches);
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent){
 		LayoutInflater inflater = LayoutInflater.from(getContext());
 		
-		View view = inflater.inflate(R.layout.match_row_layout, parent, false);
+		View view = inflater.inflate(R.layout.matches_row_layout, parent, false);
 		
 		Match match = (Match) getItem(position);
 		

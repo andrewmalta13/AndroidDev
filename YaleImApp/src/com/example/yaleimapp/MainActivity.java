@@ -10,7 +10,7 @@ import android.view.Window;
 
 
 @SuppressWarnings("deprecation")
-public class StandingsActivity extends Activity{
+public class MainActivity extends Activity{
 	
 
 	@Override
@@ -54,5 +54,15 @@ public class StandingsActivity extends Activity{
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
+	public int getDrawableRes(String name){
+		int resourceId = this.getApplicationContext().getResources().getIdentifier(name, "drawable", this.getPackageName());
+		if(resourceId == 0){
+	        return -1;
+		}else {
+		    return resourceId;
+		}
+    }
 
 }

@@ -15,14 +15,14 @@ import android.widget.TextView;
 public class StandingsAdapter extends ArrayAdapter<ResidentialCollege>{
 	
 	public StandingsAdapter(Context context, ArrayList<ResidentialCollege> colleges) {
-		super(context, R.layout.row_layout, colleges);
+		super(context, R.layout.standings_row_layout, colleges);
 	}
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent){
 		LayoutInflater inflater = LayoutInflater.from(getContext());
 		
-		View view = inflater.inflate(R.layout.row_layout, parent, false);
+		View view = inflater.inflate(R.layout.standings_row_layout, parent, false);
 		
 		ResidentialCollege college = (ResidentialCollege) getItem(position);
 		TextView collegeView = (TextView) view.findViewById(R.id.standingsTextView);

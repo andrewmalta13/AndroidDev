@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context="com.example.yaleimapp.StandingsActivity" >
+    tools:context="com.example.yaleimapp.MainActivity" >
 
     <ImageView
         android:id="@+id/team1image"

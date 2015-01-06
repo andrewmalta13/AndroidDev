@@ -81,8 +81,10 @@ public class MatchesFragment extends ListFragment implements OnItemSelectedListe
             
                 String team1 = match.getString("team1");
                 String team2 = match.getString("team2");
-                ResidentialCollege college1 = new ResidentialCollege(team1, getDrawableRes(team1), (double) 0); //score field not used in this fragment.
-                ResidentialCollege college2 = new ResidentialCollege(team2, getDrawableRes(team2), (double) 0); //score field not used in this fragment.
+                
+                //using dummy values for score since it is not needed here.
+                ResidentialCollege college1 = new ResidentialCollege(team1,((MainActivity) getActivity()).getDrawableRes(team1), (double) 0); 
+                ResidentialCollege college2 = new ResidentialCollege(team2,((MainActivity) getActivity()).getDrawableRes(team2), (double) 0); 
             
                 String sport = match.getString("sport");
                 String location = match.getString("location");
@@ -102,17 +104,7 @@ public class MatchesFragment extends ListFragment implements OnItemSelectedListe
         
 	}
 	
-	//gets the integer mapped to the drawable resource to be displayed from a given string.
-	//otherwise returns -1. 
-	public int getDrawableRes(String name){
-		Activity c = getActivity();
-	    int resourceId = c.getApplicationContext().getResources().getIdentifier(name, "drawable", c.getPackageName());
-	    if(resourceId == 0){
-	        return -1;
-	    } else {
-	        return resourceId;
-	    }
-	}
+	
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

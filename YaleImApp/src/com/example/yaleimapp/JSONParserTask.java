@@ -67,6 +67,9 @@ public class JSONParserTask extends AsyncTask<Void, Void, String>{
 		else if (task == "matches"){
 			((MatchesFragment) this.parentFragment).generateMatches(data);
 		}
+		else if (task == "teams"){
+			((TeamsFragment) this.parentFragment).generateTeams(data);
+		}
 	}
 	
 }
