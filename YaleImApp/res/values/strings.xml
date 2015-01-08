@@ -7,7 +7,7 @@
     <string name="versus_text">vs.</string>
     
     <string-array name="colleges_array">
-        <item>All</item>
+        <item>All Colleges</item>
         <item>Berkeley</item>
         <item>Branford</item>
         <item>Calhoun</item>
@@ -23,14 +23,14 @@
     </string-array>
     
     <string-array name="time_filter_choices_array">
-        <item>All</item>
+        <item>Anytime</item>
         <item>Today</item>
         <item>This Week</item>
         <item>This Month</item>
     </string-array>
     
     <string-array name="sports_array">
-        <item>All</item>
+        <item>All Sports</item>
         <item>Badminton - Coed</item>
         <item>Basketball - Men A</item>
         <item>Basketball - Men B</item>
@@ -38,19 +38,19 @@
         <item>Basketball - Coed</item>
         <item>Billiards - Coed</item>
         <item>Bowling - Coed</item>
-        <item>Cross Country Men</item>
-        <item>Cross Country Women</item>
+        <item>Cross Country - Men</item>
+        <item>Cross Country - Women</item>
         <item>Dodgeball - Coed</item>
-        <item>Football - Men </item>
-        <item>Football - Coed </item>
-        <item>Golf - Coed </item>
+        <item>Football - Men</item>
+        <item>Football - Coed</item>
+        <item>Golf - Coed</item>
         <item>Golf: B.I - Coed</item>
         <item>Ice Hockey - Coed</item>
         <item>Soccer - Coed</item>
         <item>Soccer - Men</item>
         <item>Soccer - Women</item>
         <item>Softball - Coed</item>
-        <item>Squash - Men </item>
+        <item>Squash - Men</item>
         <item>Squash - Women</item>
         <item>Swimming - Coed</item>
         <item>Tennis - Coed</item>
@@ -59,7 +59,7 @@
         <item>Volleyball - Men</item>
         <item>Volleyball - Women</item>
         <item>Volleyball - Coed</item>
-        <item>Waterpolo - Coed </item>
+        <item>Waterpolo - Coed</item>
     </string-array>
     
 </resources>

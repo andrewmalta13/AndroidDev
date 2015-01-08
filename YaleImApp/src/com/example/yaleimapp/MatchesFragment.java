@@ -50,18 +50,17 @@ public class MatchesFragment extends ListFragment implements OnItemSelectedListe
 	    timeFilterSpinner.setAdapter(timeSpinnerAdapter);
 	    timeFilterSpinner.setOnItemSelectedListener(this);
 	    
+	    
 	    if(matches.isEmpty()){
             JSONParserTask parser = new JSONParserTask(this, "matches", "http://yale-im.appspot.com/matches.json");
             parser.execute();        
 	    }
 	    
 	    adapter = new MatchesAdapter(getActivity(), matches);
-	    setListAdapter(adapter);
-
-	    
+	    setListAdapter(adapter);   
 	}
 	
-	//dummy encapsulated method that retrieves the matches list for the matches tab.
+	//parses json from yale-im.appspot.com/matches.json to retrieve a match list.
 	public void generateMatches(String json){
 		ArrayList<Match> matchList = new ArrayList<Match>();
 		try{
@@ -105,7 +104,6 @@ public class MatchesFragment extends ListFragment implements OnItemSelectedListe
 	}
 	
 	
-
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		Spinner spinner = (Spinner) parent;
@@ -170,7 +168,7 @@ public class MatchesFragment extends ListFragment implements OnItemSelectedListe
 			}
 		}
 		
-		else if(timeFilter.equals("All")){
+		else if(timeFilter.equals("AnyTime")){
 			filteredMatches = listToFilter;
 		}
 		
@@ -181,7 +179,7 @@ public class MatchesFragment extends ListFragment implements OnItemSelectedListe
 	private ArrayList<Match> filterMatchesByCollege(String formatedCollegeName, ArrayList<Match> listToFilter) {
 		ArrayList<Match> filteredMatches = new ArrayList<Match>();
 		
-		if(formatedCollegeName.equals("all")){
+		if(formatedCollegeName.equals("allcolleges")){
 			filteredMatches = listToFilter;
 		}
 		else{

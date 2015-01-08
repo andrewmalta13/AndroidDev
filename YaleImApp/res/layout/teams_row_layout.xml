@@ -4,26 +4,38 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
     
-    
-    
     <ImageView
-        android:layout_width="18dp"
-        android:layout_height="30dp"
-        android:id="@+id/team_college_image">
+        android:id="@+id/team_college_image"
+        android:layout_width="36dp"
+        android:layout_height="41dp"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:padding="15dp" >
+
     </ImageView>
     
     <TextView
+        android:id="@+id/team_sport_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:id="@+id/team_sport_text">
+        android:textSize="20sp" >
+
     </TextView>
     
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:id="@+id/team_record_text">
-    </TextView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="35sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="35dp"
+            android:id="@+id/team_record_text">
+        </TextView>
+        
+    </RelativeLayout>
+    
 
 </LinearLayout>
