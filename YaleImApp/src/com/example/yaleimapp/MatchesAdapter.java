@@ -43,7 +43,8 @@ public class MatchesAdapter extends ArrayAdapter<Match>{
 		
 		TextView dateTime = (TextView) view.findViewById(R.id.time_text);
 		Calendar date = match.getDate();
-        SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat.getDateTimeInstance();
+        SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT,
+        		SimpleDateFormat.SHORT);
 		dateTime.setText(format.format(date.getTime()));
 		
 		return view;

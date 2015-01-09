@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 
@@ -99,6 +100,7 @@ public class MatchesFragment extends ListFragment implements OnItemSelectedListe
 		
 		catch(Exception e){
 			Log.e("json parsing", "error parsing json" + e.toString());
+			Toast.makeText(getActivity(), "Error loading matches! Check Connection", Toast.LENGTH_LONG).show();
 		}
         
 	}
@@ -168,7 +170,7 @@ public class MatchesFragment extends ListFragment implements OnItemSelectedListe
 			}
 		}
 		
-		else if(timeFilter.equals("AnyTime")){
+		else if(timeFilter.equals("Anytime")){
 			filteredMatches = listToFilter;
 		}
 		

@@ -362,7 +362,7 @@ int id action_menu_presenter 0x7f05001d
 int id action_mode_bar 0x7f050030
 int id action_mode_bar_stub 0x7f05002f
 int id action_mode_close_button 0x7f050022
-int id action_settings 0x7f050050
+int id action_settings 0x7f050052
 int id activity_chooser_view_content 0x7f050023
 int id always 0x7f05000d
 int id beginning 0x7f050012
@@ -380,6 +380,7 @@ int id expand_activities_button 0x7f050024
 int id expanded_menu 0x7f05002a
 int id home 0x7f050017
 int id homeAsUp 0x7f050007
+int id hyphen 0x7f05004f
 int id icon 0x7f050028
 int id ifRoom 0x7f05000c
 int id image 0x7f050025
@@ -417,8 +418,9 @@ int id tabMode 0x7f050003
 int id team1image 0x7f050043
 int id team2image 0x7f050045
 int id team_college_image 0x7f05004d
-int id team_record_text 0x7f05004f
+int id team_losses_text 0x7f050051
 int id team_sport_text 0x7f05004e
+int id team_wins_text 0x7f050050
 int id teams_college_spinner 0x7f05004b
 int id teams_sports_spinner 0x7f05004c
 int id time_text 0x7f050047
@@ -480,6 +482,7 @@ int string abc_shareactionprovider_share_with_application 0x7f0a000d
 int string action_settings 0x7f0a0011
 int string app_name 0x7f0a000f
 int string hello_world 0x7f0a0010
+int string hyphen 0x7f0a0013
 int string versus_text 0x7f0a0012
 int style AppBaseTheme 0x7f0b00eb
 int style AppTheme 0x7f0b00ec

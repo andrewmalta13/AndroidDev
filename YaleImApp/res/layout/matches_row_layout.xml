@@ -8,16 +8,15 @@
 
     <ImageView
         android:id="@+id/team1image"
-        android:layout_width="18dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="38dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="12dp" />
+        android:layout_marginRight="5dp"
+        />
    
    <TextView
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_marginTop="8dp"
        android:id="@+id/versus_text"
        android:textSize="15sp"
        android:padding="10dp"
@@ -25,10 +24,10 @@
    ></TextView>
    
    <ImageView
-       android:layout_width="18dp"
-       android:layout_height="30dp"
-       android:layout_marginLeft="10dp"
-       android:layout_marginTop="12dp"
+       android:layout_width="25dp"
+       android:layout_height="38dp"
+       android:layout_marginLeft="5dp"
+
        android:id="@+id/team2image"
       >
    </ImageView>
@@ -37,20 +36,23 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:id="@+id/sport_text"
-       android:layout_marginTop="8dp"
        android:textSize="15sp"
        android:paddingLeft="17dp">
        
    </TextView>
    
-   <TextView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="8dp"
-       android:id="@+id/time_text"
-       android:textSize="10sp"
-       android:paddingLeft="40dp">
-   </TextView>
-    
+   
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="horizontal">
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/time_text"
+           android:textSize="12sp"
+           android:layout_alignParentRight="true">
+       </TextView>
+   </RelativeLayout>
 
 </LinearLayout>

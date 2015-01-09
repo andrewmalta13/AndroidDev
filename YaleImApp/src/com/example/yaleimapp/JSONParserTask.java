@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 public class JSONParserTask extends AsyncTask<Void, Void, String>{
 	private String url = "http://yale-im.appspot.com";
@@ -47,14 +48,9 @@ public class JSONParserTask extends AsyncTask<Void, Void, String>{
 				HttpEntity entity = response.getEntity();
 				data = EntityUtils.toString(entity);
 			}
-	    
-			
-	    //TODO handle the use case in which the user does not have network access.
-	    //display "Check internet connection" in some way.
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+	   
+		} catch(Exception e){
+			Log.e("json fetch", "encountered an error when fetching the json.");
 		}
 		return data;
 	}
@@ -62,7 +58,7 @@ public class JSONParserTask extends AsyncTask<Void, Void, String>{
 	@Override
     protected void onPostExecute(String data) {
 		if(task == "standings"){
-            ((StandingsFragment) this.parentFragment).generateColleges(data);  
+            ((StandingsFragment) this.parentFragment).generateStandings(data);  
 		}
 		else if (task == "matches"){
 			((MatchesFragment) this.parentFragment).generateMatches(data);

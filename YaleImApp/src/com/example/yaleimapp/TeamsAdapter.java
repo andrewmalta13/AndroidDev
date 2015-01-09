@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,9 +35,19 @@ public class TeamsAdapter extends ArrayAdapter<Team>{
 		TextView sportText = (TextView) view.findViewById(R.id.team_sport_text);
 		sportText.setText(team.getSport());
 	
-		//the text for the team's record E.g "10-2"
-		TextView recordText = (TextView) view.findViewById(R.id.team_record_text);
-		recordText.setText(team.getWins() + "-" + team.getLosses());
+		//the text for the team's wins. 
+		TextView wins = (TextView) view.findViewById(R.id.team_wins_text);
+		wins.setTextColor(Color.GREEN);
+		wins.setText("" + team.getWins());
+		
+		//hyphen between wins and losses
+		TextView hyphen = (TextView) view.findViewById(R.id.hyphen);
+		hyphen.setText(R.string.hyphen);
+		
+		//the text for the team's losses.
+		TextView losses = (TextView) view.findViewById(R.id.team_losses_text);
+		losses.setTextColor(Color.RED);
+		losses.setText("" + team.getLosses());
 	
 		return view;
 	}

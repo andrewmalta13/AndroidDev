@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class StandingsFragment extends ListFragment{
 	
@@ -45,7 +46,7 @@ public class StandingsFragment extends ListFragment{
 	}
 	
 	
-	public void generateColleges(String json){
+	public void generateStandings(String json){
 	    try {
 	        JSONObject jObject = new JSONObject(json);
 	        JSONObject scores = jObject.getJSONObject("scores");
@@ -72,6 +73,7 @@ public class StandingsFragment extends ListFragment{
 	    	    
 	    } catch (JSONException e) {
 	        e.printStackTrace();
+	        Toast.makeText(getActivity(), "Error loading scores! Check Connection", Toast.LENGTH_LONG).show();
 	    }
 	    
 	}

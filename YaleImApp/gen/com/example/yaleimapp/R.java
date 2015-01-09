@@ -1666,7 +1666,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f050030;
         public static final int action_mode_bar_stub=0x7f05002f;
         public static final int action_mode_close_button=0x7f050022;
-        public static final int action_settings=0x7f050050;
+        public static final int action_settings=0x7f050052;
         public static final int activity_chooser_view_content=0x7f050023;
         public static final int always=0x7f05000d;
         public static final int beginning=0x7f050012;
@@ -1684,6 +1684,7 @@ containing a value of this type.
         public static final int expanded_menu=0x7f05002a;
         public static final int home=0x7f050017;
         public static final int homeAsUp=0x7f050007;
+        public static final int hyphen=0x7f05004f;
         public static final int icon=0x7f050028;
         public static final int ifRoom=0x7f05000c;
         public static final int image=0x7f050025;
@@ -1721,8 +1722,9 @@ containing a value of this type.
         public static final int team1image=0x7f050043;
         public static final int team2image=0x7f050045;
         public static final int team_college_image=0x7f05004d;
-        public static final int team_record_text=0x7f05004f;
+        public static final int team_losses_text=0x7f050051;
         public static final int team_sport_text=0x7f05004e;
+        public static final int team_wins_text=0x7f050050;
         public static final int teams_college_spinner=0x7f05004b;
         public static final int teams_sports_spinner=0x7f05004c;
         public static final int time_text=0x7f050047;
@@ -1852,6 +1854,7 @@ containing a value of this type.
         public static final int action_settings=0x7f0a0011;
         public static final int app_name=0x7f0a000f;
         public static final int hello_world=0x7f0a0010;
+        public static final int hyphen=0x7f0a0013;
         public static final int versus_text=0x7f0a0012;
     }
     public static final class style {

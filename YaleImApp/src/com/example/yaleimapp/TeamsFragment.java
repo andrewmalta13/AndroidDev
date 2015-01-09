@@ -23,6 +23,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TeamsFragment extends ListFragment implements OnItemSelectedListener{
 	private ArrayList<Team> teams = new ArrayList<Team>();
@@ -99,6 +100,7 @@ public class TeamsFragment extends ListFragment implements OnItemSelectedListene
 		
 		catch(Exception e){
 			Log.e("json parsing", "error parsing json" + e.toString());
+			Toast.makeText(getActivity(), "Error loading teams! Check Connection", Toast.LENGTH_LONG).show();
 		}
         
 	}
